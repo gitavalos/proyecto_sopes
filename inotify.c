@@ -22,13 +22,14 @@ int main(int argc, char **argv) {
 
     wd = inotify_add_watch(fd, ".",
         IN_MODIFY | IN_CREATE | IN_DELETE);
+		
+	while(1){
+		
     length = read(fd, buffer, BUF_LEN);
 
     if (length < 0) {
         perror("read");
-    }
-
-	while(1){
+    }	
 
     while (i < length) {
         struct inotify_event *event =
@@ -44,7 +45,7 @@ int main(int argc, char **argv) {
         }
         i += EVENT_SIZE + event->len;
     }
-
+		
 	}
 	
     (void) inotify_rm_watch(fd, wd);
