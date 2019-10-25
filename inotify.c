@@ -67,11 +67,12 @@ void  INThandler(int sig)
      printf("OUCH, did you hit Ctrl-C?\n"
             "Do you really want to quit? [y/n] ");
      c = getchar();
-     if (c == 'y' || c == 'Y')
+     if (c == 'y' || c == 'Y'){
 		fclose(fptr);		
 		printf ("Exiting inotify example...\n");
-        exit(0);
-     else
+	 exit(0);
+     }else{
           signal(SIGINT, INThandler);
      getchar(); // Get new line character
+	 }
 }
