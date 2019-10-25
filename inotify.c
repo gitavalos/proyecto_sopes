@@ -82,6 +82,7 @@ int main( int argc, char **argv )
   /*Check for supplied path to monitor*/
   switch(argc)
     {
+		/*
     case 1: printf("No directory specified. Will monitor the entire filesystem...\n\n");
       strcpy(root,"/");
       break;
@@ -95,7 +96,7 @@ int main( int argc, char **argv )
        
     default: printf("Ignoring all other arguments after the first\n");
     }
-   
+   */
  
   /* Set up logger*/
   fp_log = fopen("inotify_logger.log","a");
