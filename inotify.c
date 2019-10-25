@@ -46,7 +46,7 @@ do{
         i += EVENT_SIZE + event->len;
     }
 	cont = cont +1;
-	printf("contador: %i . \n"cont);
+	printf("contador: %i . \n",cont);
 }while(1 == 1)
 	
 	
