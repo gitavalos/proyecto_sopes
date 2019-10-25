@@ -75,6 +75,7 @@ int main( int argc, char **argv )
 {
   int length, i = 0;
   int fd;
+  int wd;
   char buffer[BUF_LEN], root[MAX_LEN];
  
  
