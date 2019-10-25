@@ -117,7 +117,7 @@ int main( int argc, char **argv )
   while(1)
     {
       i = 0;
-      length = read( fd, buffer, BUF_LEN );  
+      length = fread( fd, buffer, BUF_LEN );  
  
       if ( length < 0 ) {
         perror( "read" );
@@ -154,7 +154,7 @@ int main( int argc, char **argv )
       }
     }
   /* Clean up*/
-  ( void ) close( fd );
+  ( void ) pclose( fd );
    
   return 0;
 }
