@@ -87,7 +87,7 @@ int main( int argc, char **argv )
        
     case 2: strcpy(root,argv[1]);
       if(root[strlen(root)-1]!='/')
-        strcat(root,"/");
+        strcat(root,"/");	
       puts(root);
  
       break;
@@ -111,7 +111,10 @@ int main( int argc, char **argv )
  
   /* Read the sub-directories at one level under argv[1] 
    * and monitor them for access */
-  add_watches(fd,root);
+  //add_watches(fd,root);
+   wd = inotify_add_watch(fd, ".",
+        IN_MODIFY | IN_CREATE | IN_DELETE);
+    length = read(fd, buffer, BUF_LEN);
    
   /* do it forever*/
   while(1)
