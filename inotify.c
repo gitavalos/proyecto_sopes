@@ -80,9 +80,10 @@ int main( int argc, char **argv )
  
  
   /*Check for supplied path to monitor*/
+  
+		/*
   switch(argc)
     {
-		/*
     case 1: printf("No directory specified. Will monitor the entire filesystem...\n\n");
       strcpy(root,"/");
       break;
