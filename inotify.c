@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
 			}
 			i += EVENT_SIZE + event->len;
 		}
-		fflush(fptr);
+		//fflush(fptr);
 	}
 	
 	fclose(fptr);
