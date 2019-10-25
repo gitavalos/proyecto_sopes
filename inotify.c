@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
 	
 	while(1)
     {
-      i = 0;
+		i = 0;
 		
 		length = read(fd, buffer, BUF_LEN);
 
@@ -43,8 +43,7 @@ int main(int argc, char **argv) {
 		}		
 
 		while (i < length) {
-			struct inotify_event *event =
-				(struct inotify_event *) &buffer[i];
+			struct inotify_event *event = (struct inotify_event *) &buffer[i];
 			if (event->len) {
 				if (event->mask & IN_CREATE) {
 					printf("The file %s was created.\n", event->name);
