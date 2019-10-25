@@ -23,31 +23,40 @@ int main(int argc, char **argv) {
     wd = inotify_add_watch(fd, ".",
         IN_MODIFY | IN_CREATE | IN_DELETE);
 	
-		
-    length = read(fd, buffer, BUF_LEN);
-
-    if (length < 0) {
-        perror("read");
-    }	
-int cont = 0;
-do{
-    while (i < length) {
-        struct inotify_event *event =
-            (struct inotify_event *) &buffer[i];
-        if (event->len) {
-            if (event->mask & IN_CREATE) {
-                printf("The file %s was created.\n", event->name);
-            } else if (event->mask & IN_DELETE) {
-                printf("The file %s was deleted.\n", event->name);
-            } else if (event->mask & IN_MODIFY) {
-                printf("The file %s was modified.\n", event->name);
-            }
-        }
-        i += EVENT_SIZE + event->len;
+	if (wd == -1)
+    {
+      printf("Couldn't add watch to %s\n",argv[1]);
     }
-	cont = cont +1;
-	printf("contador: %i . \n",cont);
-}while(1 == 1);
+	else
+    {
+      printf("Watching:: %s\n",argv[1]);
+    }	
+	
+	while(1)
+    {
+      i = 0;
+		
+		length = read(fd, buffer, BUF_LEN);
+
+		if (length < 0) {
+			perror("read");
+		}		
+
+		while (i < length) {
+			struct inotify_event *event =
+				(struct inotify_event *) &buffer[i];
+			if (event->len) {
+				if (event->mask & IN_CREATE) {
+					printf("The file %s was created.\n", event->name);
+				} else if (event->mask & IN_DELETE) {
+					printf("The file %s was deleted.\n", event->name);
+				} else if (event->mask & IN_MODIFY) {
+					printf("The file %s was modified.\n", event->name);
+				}
+			}
+			i += EVENT_SIZE + event->len;
+		}
+	}
 	
 	
     (void) inotify_rm_watch(fd, wd);
