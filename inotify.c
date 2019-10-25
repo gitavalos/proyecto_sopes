@@ -51,6 +51,7 @@ int main(int argc, char **argv) {
 	
     (void) inotify_rm_watch(fd, wd);
     (void) close(fd);
+	sleep(3);
 	}
     return 0;
 }
