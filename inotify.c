@@ -9,15 +9,14 @@
 #define EVENT_SIZE  (sizeof(struct inotify_event))
 #define BUF_LEN     (1024 * (EVENT_SIZE + 16))
 
-
-void     INThandler(int);
+void  INThandler(int);
 FILE* fptr;
 
 int  main(void)
-{
-     signal(SIGINT, INThandler);
-	 
-	 int length, i = 0;
+{	
+    signal(SIGINT, INThandler);
+	fptr = fopen("./log.txt", "a");
+	int length, i = 0;
     int fd;
     int wd;
     char buffer[BUF_LEN];
@@ -25,10 +24,11 @@ int  main(void)
     if (fd < 0) {
         perror("inotify_init");
     }
+	
     wd = inotify_add_watch(fd, ".",IN_MODIFY | IN_CREATE | IN_DELETE);
-	fptr = fopen("./log.txt", "a");
+	
      while (1){
-		  i = 0;	  
+		i = 0;	  
 		length = read(fd, buffer, BUF_LEN);
 		if (length < 0) {
 			perror("read");
@@ -52,9 +52,10 @@ int  main(void)
 			}
 			i += EVENT_SIZE + event->len;
 		}
-        pause();
+        //pause();
 	 }
-	 (void) inotify_rm_watch(fd, wd);
+	fclose(fptr);
+	(void) inotify_rm_watch(fd, wd);
     (void) close(fd);
 	 printf ("Exiting inotify example...\n");
      return 0;
@@ -70,8 +71,10 @@ void  INThandler(int sig)
      c = getchar();
      if (c == 'y' || c == 'Y'){
 		  fclose(fptr);
-	 exit(0);}
+		  exit(0);
+	 }
      else{
-	 signal(SIGINT, INThandler);}
+		signal(SIGINT, INThandler);
+	 }
      getchar(); // Get new line character
 }
