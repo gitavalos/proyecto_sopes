@@ -10,12 +10,14 @@
 
 FILE* fptr;
 
-void     INThandler(int);
+void  INThandler(int);
 
 int  main(void)
 {
-	fptr = fopen("./log.txt", "a");
+	
 	signal(SIGINT, INThandler);
+	
+	fptr = fopen("./log.txt", "a");
 	int length, i = 0;
     int fd;
     int wd;
