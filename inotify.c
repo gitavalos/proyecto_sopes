@@ -16,10 +16,10 @@ int main(int argc, char **argv) {
     int wd;
     char buffer[BUF_LEN];
 
-	FILE* destFile;
+	FILE* fptr;
     char buf[50];
     int numBytes;
-	destFile = fopen("./log.txt", "w");
+	fptr = fopen("./log.txt", "w");
 
     fd = inotify_init();
 
