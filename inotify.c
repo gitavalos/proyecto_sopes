@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
         perror("inotify_init");
     }
     wd = inotify_add_watch(fd, ".",IN_MODIFY | IN_CREATE | IN_DELETE);	
-	fptr = fopen("./log.txt", "wa");
+	fptr = fopen("./log.txt", "w+");
 	while(1)
     {
 		
