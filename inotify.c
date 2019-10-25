@@ -1,78 +1,29 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/inotify.h>
-#include <unistd.h>
+#include  <stdio.h>
+#include  <signal.h>
+#include  <stdlib.h>
 
-#define EVENT_SIZE  (sizeof(struct inotify_event))
-#define BUF_LEN     (1024 * (EVENT_SIZE + 16))
-
-FILE* fptr;
-
-void  INThandler(int);
+void     INThandler(int);
 
 int  main(void)
 {
-	
-	signal(SIGINT, INThandler);
-	
-	fptr = fopen("./log.txt", "a");
-	int length, i = 0;
-    int fd;
-    int wd;
-    char buffer[BUF_LEN];
-	fd = inotify_init();
-
-    if (fd < 0) {
-        perror("inotify_init");
-    }
-
-    wd = inotify_add_watch(fd, ".",IN_MODIFY | IN_CREATE | IN_DELETE);
-	
-	
-	while(1)
-    {		
-		i = 0;	  
-		length = read(fd, buffer, BUF_LEN);
-		if (length < 0) {
-			perror("read");
-		}
-		while (i < length) {
-			struct inotify_event *event = (struct inotify_event *) &buffer[i];
-			if (event->len) {
-				if (event->mask & IN_CREATE) {
-					printf("The file %s was created.\n", event->name);
-					fprintf(fptr,"The file %s was created.\n",event->name);
-				} else if (event->mask & IN_DELETE) {
-					printf("The file %s was deleted.\n", event->name);
-					fprintf(fptr,"The file %s was deleted.\n", event->name);
-				} else if (event->mask & IN_MODIFY) {
-					printf("The file %s was modified.\n", event->name);
-					fprintf(fptr,"The file %s was modified.\n", event->name);
-				}
-			}
-			i += EVENT_SIZE + event->len;
-		}		
-	}	
-    (void) inotify_rm_watch(fd, wd);
-    (void) close(fd);
-	return 1;
+     signal(SIGINT, INThandler);
+     while (1)
+		  printf("conteo");
+          pause();
+     return 0;
 }
 
 void  INThandler(int sig)
 {
      char  c;
+
      signal(sig, SIG_IGN);
      printf("OUCH, did you hit Ctrl-C?\n"
             "Do you really want to quit? [y/n] ");
      c = getchar();
-     if (c == 'y' || c == 'Y'){
-		fclose(fptr);		
-		printf ("Exiting inotify example...\n");
-	 exit(0);
-     }else{
+     if (c == 'y' || c == 'Y')
+          exit(0);
+     else
           signal(SIGINT, INThandler);
      getchar(); // Get new line character
-	 }
 }
