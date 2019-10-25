@@ -47,7 +47,7 @@ do{
     }
 	cont = cont +1;
 	printf("contador: %i . \n",cont);
-}while(1 == 1)
+}while(1 == 1);
 	
 	
     (void) inotify_rm_watch(fd, wd);
