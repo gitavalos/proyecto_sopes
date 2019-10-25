@@ -28,8 +28,9 @@ int main(int argc, char **argv) {
     wd = inotify_add_watch(fd, ".",
         IN_MODIFY | IN_CREATE | IN_DELETE);
 	fflush(fptr);
-	write(fptr,"Hola mundo! \n");	
+	fprintf(fptr,"Hola mundo! \n");	
 	
+	fclose(fptr);
 	
 	while(1)
     {
@@ -46,23 +47,22 @@ int main(int argc, char **argv) {
 			if (event->len) {
 				if (event->mask & IN_CREATE) {
 					printf("The file %s was created.\n", event->name);
-					fflush(fptr);
-					fprintf(fptr,"The file %s was created.\n",event->name);
+					//fflush(fptr);
+					//fprintf(fptr,"The file %s was created.\n",event->name);
 				} else if (event->mask & IN_DELETE) {
 					printf("The file %s was deleted.\n", event->name);
-					fflush(fptr);
-					fprintf(fptr,"The file %s was deleted.\n", event->name);
+					//fflush(fptr);
+					//fprintf(fptr,"The file %s was deleted.\n", event->name);
 				} else if (event->mask & IN_MODIFY) {
 					printf("The file %s was modified.\n", event->name);
-					fflush(fptr);
-					fprintf(fptr,"The file %s was modified.\n", event->name);
+					//fflush(fptr);
+					//fprintf(fptr,"The file %s was modified.\n", event->name);
 				}
 			}
 			i += EVENT_SIZE + event->len;
 		}
 	}
 	
-	fclose(fptr);
 	
     (void) inotify_rm_watch(fd, wd);
     (void) close(fd);
