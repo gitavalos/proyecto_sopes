@@ -28,6 +28,8 @@ int main(int argc, char **argv) {
         perror("read");
     }
 
+	while(true){
+
     while (i < length) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[i];
@@ -43,6 +45,8 @@ int main(int argc, char **argv) {
         i += EVENT_SIZE + event->len;
     }
 
+	}
+	
     (void) inotify_rm_watch(fd, wd);
     (void) close(fd);
 
