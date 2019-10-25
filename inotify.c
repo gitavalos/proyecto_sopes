@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
     char buffer[BUF_LEN];
 
 	FILE* fptr;
-	fptr = fopen("./log.txt", "w");
+	fptr = fopen("./log.txt", "a");
 
     fd = inotify_init();
 
@@ -34,7 +34,7 @@ int main(int argc, char **argv) {
 	
 	while(1)
     {
-		fptr = fopen("./log.txt", "w");
+		fptr = fopen("./log.txt", "a");
 		i = 0;
 	  
 		length = read(fd, buffer, BUF_LEN);
@@ -48,16 +48,16 @@ int main(int argc, char **argv) {
 			if (event->len) {
 				if (event->mask & IN_CREATE) {
 					printf("The file %s was created.\n", event->name);
-					//fflush(fptr);
-					//fprintf(fptr,"The file %s was created.\n",event->name);
+					fflush(fptr);
+					fprintf(fptr,"The file %s was created.\n",event->name);
 				} else if (event->mask & IN_DELETE) {
 					printf("The file %s was deleted.\n", event->name);
-					//fflush(fptr);
-					//fprintf(fptr,"The file %s was deleted.\n", event->name);
+					fflush(fptr);
+					fprintf(fptr,"The file %s was deleted.\n", event->name);
 				} else if (event->mask & IN_MODIFY) {
 					printf("The file %s was modified.\n", event->name);
-					//fflush(fptr);
-					//fprintf(fptr,"The file %s was modified.\n", event->name);
+					fflush(fptr);
+					fprintf(fptr,"The file %s was modified.\n", event->name);
 				}
 			}
 			i += EVENT_SIZE + event->len;
