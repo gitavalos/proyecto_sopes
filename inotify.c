@@ -14,6 +14,8 @@ int main(int argc, char **argv) {
     int wd;
     char buffer[BUF_LEN];
 
+	
+	while(1){
     fd = inotify_init();
 
     if (fd < 0) {
@@ -22,8 +24,7 @@ int main(int argc, char **argv) {
 
     wd = inotify_add_watch(fd, ".",
         IN_MODIFY | IN_CREATE | IN_DELETE);
-		
-	while(1){
+	
 		
     length = read(fd, buffer, BUF_LEN);
 
@@ -46,10 +47,10 @@ int main(int argc, char **argv) {
         i += EVENT_SIZE + event->len;
     }
 		
-	}
+	
 	
     (void) inotify_rm_watch(fd, wd);
     (void) close(fd);
-
+	}
     return 0;
 }
