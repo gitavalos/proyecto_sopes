@@ -14,8 +14,6 @@ int main(int argc, char **argv) {
     int wd;
     char buffer[BUF_LEN];
 
-	
-	while(1){
     fd = inotify_init();
 
     if (fd < 0) {
@@ -31,7 +29,8 @@ int main(int argc, char **argv) {
     if (length < 0) {
         perror("read");
     }	
-
+int cont = 0;
+do{
     while (i < length) {
         struct inotify_event *event =
             (struct inotify_event *) &buffer[i];
@@ -46,12 +45,12 @@ int main(int argc, char **argv) {
         }
         i += EVENT_SIZE + event->len;
     }
-		
+	cont = cont +1;
+	printf("contador: %i . \n"cont);
+}while(1 == 1)
 	
 	
     (void) inotify_rm_watch(fd, wd);
     (void) close(fd);
-	sleep(3);
-	}
     return 0;
 }
