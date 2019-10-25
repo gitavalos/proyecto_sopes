@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
     char buffer[BUF_LEN];
 
 	FILE* fptr;
-	fptr = fopen("./log.txt", "a");
+	
 
     fd = inotify_init();
 
@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
 	
 	while(1)
     {
-		
+		fptr = fopen("./log.txt", "a");
 		i = 0;
 	  
 		length = read(fd, buffer, BUF_LEN);
@@ -59,10 +59,10 @@ int main(int argc, char **argv) {
 			}
 			i += EVENT_SIZE + event->len;
 		}
-		//fflush(fptr);
+		fclose(fptr);
 	}
 	
-	fclose(fptr);
+	
 	
 	
     (void) inotify_rm_watch(fd, wd);
