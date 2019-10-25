@@ -9,23 +9,17 @@
 #define BUF_LEN     (1024 * (EVENT_SIZE + 16))
 
 int main(int argc, char **argv) {
-	int num;
-    FILE *fptr;
+	
    
     int length, i = 0;
     int fd;
     int wd;
     char buffer[BUF_LEN];
 
-	fptr = fopen("./log.txt","w");
-	
-	if(fptr == NULL)
-   {
-      printf("Error!");   
-      exit(1);             
-   }
-
-
+	FILE* destFile;
+    char buf[50];
+    int numBytes;
+	destFile = fopen("./log.txt", "w");
 
     fd = inotify_init();
 
@@ -64,8 +58,6 @@ int main(int argc, char **argv) {
 		}
 	}
 	
-	fclose(fptr);
-
     (void) inotify_rm_watch(fd, wd);
     (void) close(fd);
 
