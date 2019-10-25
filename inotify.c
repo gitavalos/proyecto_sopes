@@ -9,10 +9,23 @@
 #define BUF_LEN     (1024 * (EVENT_SIZE + 16))
 
 int main(int argc, char **argv) {
+	int num;
+    FILE *fptr;
+   
     int length, i = 0;
     int fd;
     int wd;
     char buffer[BUF_LEN];
+
+	fptr = fopen("./log.txt","a");
+	
+	if(fptr == NULL)
+   {
+      printf("Error!");   
+      exit(1);             
+   }
+
+
 
     fd = inotify_init();
 
@@ -25,29 +38,33 @@ int main(int argc, char **argv) {
 		
 	while(1)
     {
-      i = 0;
+		i = 0;
 	  
-    length = read(fd, buffer, BUF_LEN);
+		length = read(fd, buffer, BUF_LEN);
 
-    if (length < 0) {
-        perror("read");
-    }
+		if (length < 0) {
+			perror("read");
+		}
 
-    while (i < length) {
-        struct inotify_event *event =
-            (struct inotify_event *) &buffer[i];
-        if (event->len) {
-            if (event->mask & IN_CREATE) {
-                printf("The file %s was created.\n", event->name);
-            } else if (event->mask & IN_DELETE) {
-                printf("The file %s was deleted.\n", event->name);
-            } else if (event->mask & IN_MODIFY) {
-                printf("The file %s was modified.\n", event->name);
-            }
-        }
-        i += EVENT_SIZE + event->len;
-    }
+		while (i < length) {
+			struct inotify_event *event = (struct inotify_event *) &buffer[i];
+			if (event->len) {
+				if (event->mask & IN_CREATE) {
+					printf("The file %s was created.\n", event->name);
+					fprintf(fptr,"The file %s was created.\n",event->name);
+				} else if (event->mask & IN_DELETE) {
+					printf("The file %s was deleted.\n", event->name);
+					fprintf(fptr,"The file %s was deleted.\n", event->name);
+				} else if (event->mask & IN_MODIFY) {
+					printf("The file %s was modified.\n", event->name);
+					fprintf(fptr,"The file %s was modified.\n", event->name);
+				}
+			}
+			i += EVENT_SIZE + event->len;
+		}
 	}
+	
+	fclose(fptr);
 
     (void) inotify_rm_watch(fd, wd);
     (void) close(fd);
