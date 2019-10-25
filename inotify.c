@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
         perror("read");
     }
 
-	while(true){
+	while(1){
 
     while (i < length) {
         struct inotify_event *event =
