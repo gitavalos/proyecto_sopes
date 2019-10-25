@@ -17,7 +17,7 @@ int main(int argc, char **argv) {
     int wd;
     char buffer[BUF_LEN];
 
-	fptr = fopen("./log.txt","a");
+	fptr = fopen("./log.txt","w");
 	
 	if(fptr == NULL)
    {
