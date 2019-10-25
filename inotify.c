@@ -34,6 +34,7 @@ int main(int argc, char **argv) {
 	
 	while(1)
     {
+		fptr = fopen("./log.txt", "w");
 		i = 0;
 	  
 		length = read(fd, buffer, BUF_LEN);
@@ -61,6 +62,7 @@ int main(int argc, char **argv) {
 			}
 			i += EVENT_SIZE + event->len;
 		}
+		fclose(fptr);
 	}
 	
 	
