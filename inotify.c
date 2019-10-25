@@ -132,24 +132,17 @@ int main( int argc, char **argv )
         struct inotify_event *event = ( struct inotify_event * ) &buffer[ i ];
         if ( event->len ) {
           if ( event->mask & IN_CREATE) {
-            if (event->mask & IN_ISDIR)
-              fprintf(fp_log,"%d DIR::%s CREATED\n", event->wd,event->name );       
-            else
+			  printf("The file %s was created.\n", event->name);
               fprintf(fp_log, "%d FILE::%s CREATED\n", event->wd, event->name);       
           }
            
           if ( event->mask & IN_MODIFY) {
-            if (event->mask & IN_ISDIR)
-              fprintf(fp_log,"%d DIR::%s MODIFIED\n", event->wd,event->name );       
-            else
-              fprintf(fp_log,"%d FILE::%s MODIFIED\n", event->wd,event->name );       
- 
+			  printf("The file %s was deleted.\n", event->name);
+              fprintf(fp_log,"%d FILE::%s MODIFIED\n", event->wd,event->name );     
           }
            
           if ( event->mask & IN_DELETE) {
-            if (event->mask & IN_ISDIR)
-              fprintf(fp_log,"%d DIR::%s DELETED\n", event->wd,event->name );       
-            else
+			  printf("The file %s was modified.\n", event->name);
               fprintf(fp_log,"%d FILE::%s DELETED\n", event->wd,event->name );       
           }  
  
@@ -158,6 +151,8 @@ int main( int argc, char **argv )
       }
     }
   /* Clean up*/
+  fclose(fp_log);
+  (void) inotify_rm_watch(fd,wd);
   ( void ) close( fd );
    
   return 0;
