@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
 	fptr = fopen("./log.txt", "w+");
 	
 		fprintf(fptr,"HELLO WORLD");
-		fflush(fptr);
+		//fflush(fptr);
 		fclose(fptr);
 	
 	
