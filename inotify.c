@@ -20,7 +20,13 @@ int main(int argc, char **argv) {
     }
     wd = inotify_add_watch(fd, ".",IN_MODIFY | IN_CREATE | IN_DELETE);	
 	fptr = fopen("./log.txt", "w+");
-	while(1)
+	
+		fprintf(fptr,"HELLO WORLD");
+		fflush(fptr);
+		fclose(fptr);
+	
+	
+	/*while(1)
     {
 		
 		i = 0;
@@ -51,7 +57,7 @@ int main(int argc, char **argv) {
 			i += EVENT_SIZE + event->len;
 		}
 		
-	}	
+	}	*/
 	fclose(fptr);
     (void) inotify_rm_watch(fd, wd);
     (void) close(fd);
