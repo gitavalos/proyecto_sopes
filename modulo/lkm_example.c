@@ -18,7 +18,7 @@ MODULE_LICENSE("GPL");
 //direccion de systable, se encuentra con el siguiente comando: cat /proc/kallsyms  | grep sys_call
 // tomar la direccion de sys_call_table
 //realizar cada vez que se reinicie el sistema puesto que la direccion cambia
-#define dir_systable 0xffffffff85e00200
+#define dir_systable 0xffffffff92400200 
 
 unsigned long *sys_call_table = (unsigned long*) dir_systable;
 
