@@ -11,11 +11,11 @@
 //#include <sys/syscall.h>
 
 MODULE_LICENSE("GPL");
-
+/*
 // IOCTL commands
 #define IOCTL_PATCH_TABLE 0x00000001
 #define IOCTL_FIX_TABLE 0x00000004
-
+*/
 //direccion de systable, se encuentra con el siguiente comando: cat /proc/kallsyms  | grep sys_call
 // tomar la direccion de sys_call_table
 //realizar cada vez que se reinicie el sistema puesto que la direccion cambia
@@ -24,7 +24,7 @@ MODULE_LICENSE("GPL");
 unsigned long *sys_call_table;
 
 //puntero de la funcion del sys_openat
-asmlinkage long (*real_open)(const char* __user, int, int);
+//asmlinkage long (*real_open)(const char* __user, int, int);
 
 asmlinkage long (*original_sys_unlink) (const char *pathname);
 
@@ -38,11 +38,12 @@ asmlinkage long hacked_sys_unlink(const char *pathname)
         
 
 //Reemplazando la llamada original con la llamada modificada
+/*
 asmlinkage long custom_open(const char* __user file_name, int flags, int mode)
 {
 	printk("INTERCEPTADO: open(\"%s\", %X, %X)\n", file_name,flags,mode);
 	return real_open(file_name,flags,mode);	
-}
+}*/
 
 /*
 Modificando la pagina de la memoria para escritura
@@ -76,10 +77,9 @@ static int __init init_my_module(void)
 	//para este ejemplo se utiliza la llamada al sistema openat para abir archivos
 	printk(KERN_INFO "Inside kernel space\n");
 	//cambiando permisos de la pagina
-	make_rw((unsigned long)sys_call_table);
-	
+	make_rw((unsigned long)sys_call_table);	
 	original_sys_unlink = (void *)xchg(&sys_call_table[__NR_unlink],hacked_sys_unlink);
-	
+	make_ro((unsigned long)sys_call_table);
 	printk("hizo el cambio de pagina \n");
 	return 0;
 }
