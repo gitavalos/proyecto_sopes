@@ -6,7 +6,8 @@
 #include <linux/miscdevice.h>
 #include <linux/fs.h>
 #include <linux/highmem.h>
-#include <asm/unistd.h>
+#include<linux/unistd.h>
+//#include <asm/unistd.h>
 //#include <sys/syscall.h>
 
 MODULE_LICENSE("GPL");
@@ -79,7 +80,7 @@ static int __init init_my_module(void)
 	original_sys_unlink = sys_call_table[__NR_unlink];
 	//insertando nuestra funcion a la direccion de memoria de openat
 	sys_call_table[__NR_unlink] = (unsigned long) hacked_sys_unlink;
-	make_ro((unsigned long)sys_call_table);
+	//make_ro((unsigned long)sys_call_table);
 	printk("hizo el cambio de pagina \n");
 	return 0;
 }
