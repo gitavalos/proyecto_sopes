@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 	}
 
 	//wd = inotify_add_watch(fd, "/home",IN_MODIFY | IN_CREATE | IN_DELETE);
-	add_watches(fd, "/home/");
+	add_watches(fd, "/home/carnet201114339/");
 	//fptr = fopen("/log.txt", "w+");
 	//fprintf(fptr,"HELLO WORLD");
 	//fclose(fptr);
