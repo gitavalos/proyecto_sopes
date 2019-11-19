@@ -23,25 +23,24 @@ MODULE_LICENSE("GPL");
 unsigned long *sys_call_table = (unsigned long*) dir_systable;
 
 //puntero de la funcion del sys_openat
-//asmlinkage long (*real_open)(const char* __user, int, int);
+asmlinkage long (*real_open)(const char* __user, int, int);
 
 asmlinkage long (*original_sys_unlink) (const char *pathname);
 
 /*return -1. this will prevent any process from unlinking any file*/
 asmlinkage long hacked_sys_unlink(const char *pathname)
 {
-    printk("RM_CATCHED: unlink( \"%s\" )\n", pathname);
-    //return original_sys_unlink(pathname);
-	return -1;
+    printk("RETENIDO: unlink( \"%s\" )\n", pathname);
+    return original_sys_unlink(pathname);
+	
 }
         
 
 //Reemplazando la llamada original con la llamada modificada
 asmlinkage long custom_open(const char* __user file_name, int flags, int mode)
 {
-	printk("interceptor: open(\"%s\", %X, %X)\n", file_name,flags,mode);
-	//return real_open(file_name,flags,mode);
-	return 1;
+	printk("INTERCEPTADO: open(\"%s\", %X, %X)\n", file_name,flags,mode);
+	return real_open(file_name,flags,mode);	
 }
 
 /*
