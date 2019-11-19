@@ -78,7 +78,7 @@ static int __init init_my_module(void)
 	//guardando el valor de memoria de la llamada original
 	original_sys_unlink = (void *)sys_call_table[__NR_unlink];
 	//insertando nuestra funcion a la direccion de memoria de openat
-	*sys_call_table[__NR_unlink] = (unsigned long) hacked_sys_unlink;
+	*(sys_call_table + __NR_unlink) = (unsigned long) hacked_sys_unlink;
 	make_ro((unsigned long)sys_call_table);
 	printk("hizo el cambio de pagina \n");
 	return 0;
@@ -90,7 +90,7 @@ static void __exit cleanup_my_module(void)
 	//cambiando la direccion de memoria a modo de escritura
 	make_rw((unsigned long)sys_call_table);
 	//regresando la funcion original a la direccion de la llamada
-	*sys_call_table[__NR_unlink] = (unsigned long)original_sys_unlink;
+	*(sys_call_table + __NR_unlink) = (unsigned long)original_sys_unlink;
 	//cambiando la direccion de memoria a modo de lectura. 
 	make_ro((unsigned long)sys_call_table);
 	printk(KERN_INFO "Exiting kernel space\n");
