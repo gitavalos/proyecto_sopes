@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
     if (fd < 0) {
         perror("inotify_init");
     }
-    wd = inotify_add_watch(fd, ".",IN_MODIFY | IN_CREATE | IN_DELETE);	
+    wd = inotify_add_watch(fd, "/home",IN_MODIFY | IN_CREATE | IN_DELETE);	
 	//fptr = fopen("/log.txt", "w+");	
 		//fprintf(fptr,"HELLO WORLD");
 		//fclose(fptr);
