@@ -19,14 +19,11 @@ int main(int argc, char **argv) {
         perror("inotify_init");
     }
     wd = inotify_add_watch(fd, ".",IN_MODIFY | IN_CREATE | IN_DELETE);	
-	fptr = fopen("./log.txt", "w+");
+	fptr = fopen("./log.txt", "w+");	
+		//fprintf(fptr,"HELLO WORLD");
+		//fclose(fptr);
 	
-		fprintf(fptr,"HELLO WORLD");
-		//fflush(fptr);
-		fclose(fptr);
-	
-	
-	/*while(1)
+	while(1)
     {
 		
 		i = 0;
@@ -37,28 +34,27 @@ int main(int argc, char **argv) {
 			perror("read");
 		}
 
-		while (i < length) {
+		if (i < length) {
+			fptr = fopen("./log.txt", "w+");
 			struct inotify_event *event = (struct inotify_event *) &buffer[i];
 			if (event->len) {
 				if (event->mask & IN_CREATE) {
-					printf("The file %s was created.\n", event->name);
-					
+					printf("The file %s was created.\n", event->name);					
 					fprintf(fptr,"The file %s was created.\n",event->name);
 				} else if (event->mask & IN_DELETE) {
-					printf("The file %s was deleted.\n", event->name);
-					
+					printf("The file %s was deleted.\n", event->name);					
 					fprintf(fptr,"The file %s was deleted.\n", event->name);
 				} else if (event->mask & IN_MODIFY) {
-					printf("The file %s was modified.\n", event->name);
-					
+					printf("The file %s was modified.\n", event->name);					
 					fprintf(fptr,"The file %s was modified.\n", event->name);
 				}
 			}
 			i += EVENT_SIZE + event->len;
+			fclose(fptr);
 		}
 		
-	}	*/
-	fclose(fptr);
+	}
+	
     (void) inotify_rm_watch(fd, wd);
     (void) close(fd);
 	printf ("Exiting inotify example...\n");
