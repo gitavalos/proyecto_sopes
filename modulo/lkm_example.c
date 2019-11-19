@@ -73,7 +73,7 @@ int make_ro(unsigned long address)
 
 static int __init init_my_module(void)
 {
-	*(long *)&sys_call_table = = 0xffffffff92400200;
+	*(long *)&sys_call_table = 0xffffffff92400200;
 	//para este ejemplo se utiliza la llamada al sistema openat para abir archivos
 	printk(KERN_INFO "Inside kernel space\n");
 	//cambiando permisos de la pagina
