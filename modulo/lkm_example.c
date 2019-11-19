@@ -31,7 +31,7 @@ asmlinkage long (*original_sys_unlink) (const char *pathname);
 asmlinkage long hacked_sys_unlink(const char *pathname)
 {
 	char *test;
-	strncpy_from_user(test,pathname,100);
+	copy_from_user(test,pathname,100);
     printk("RETENIDO: unlink( %s )\n", test);
     //return original_sys_unlink(pathname);
 	return 1;
