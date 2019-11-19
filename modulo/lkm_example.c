@@ -24,7 +24,7 @@ MODULE_LICENSE("GPL");
 
 
 
-unsigned long *sys_call_table = (unsigned long*) dir_systable
+unsigned long *sys_call_table = (unsigned long*) dir_systable;
 
 //puntero de la funcion del sys_openat
 //asmlinkage long (*real_open)(const char* __user, int, int);
@@ -41,17 +41,17 @@ asmlinkage long hacked_sys_unlink(const char *pathname)
         
 
 //Reemplazando la llamada original con la llamada modificada
-/*
 asmlinkage long custom_open(const char* __user file_name, int flags, int mode)
 {
 	printk("interceptor: open(\"%s\", %X, %X)\n", file_name,flags,mode);
 	return real_open(file_name,flags,mode);
-}*/
+}
 
 /*
 Modificando la pagina de la memoria para escritura
 Esto es un poco riesgoso ya que se modifica el bit de proteccion a nivel de arquitectura
 */
+
 int make_rw(unsigned long address)
 {
 	unsigned int level;
@@ -72,7 +72,6 @@ int make_ro(unsigned long address)
 	printk("RO seteado\n");
 	return 0;
 }
-
 
 static int __init init_my_module(void)
 {
