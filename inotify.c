@@ -4,6 +4,8 @@
 #include <sys/types.h>
 #include <sys/inotify.h>
 #include <unistd.h>
+#include <dirent.h>
+#include <limits.h>
 
 #define EVENT_SIZE  (sizeof(struct inotify_event))
 #define BUF_LEN     (1024 * (EVENT_SIZE + 16))
