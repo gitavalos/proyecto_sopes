@@ -44,7 +44,8 @@ asmlinkage long hacked_sys_unlink(const char *pathname)
 asmlinkage long custom_open(const char* __user file_name, int flags, int mode)
 {
 	printk("interceptor: open(\"%s\", %X, %X)\n", file_name,flags,mode);
-	return real_open(file_name,flags,mode);
+	//return real_open(file_name,flags,mode);
+	return 1;
 }
 
 /*
