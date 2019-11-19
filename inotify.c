@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 	{
 		perror("inotify_init");
 	}
-	strcpy(root, "/home");
+	strcpy(root, "/home/");
 	/*if (root[strlen(root) - 1] != '/')
 		strcat(root, "/");
 	puts(root);*/
