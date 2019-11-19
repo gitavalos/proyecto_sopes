@@ -21,7 +21,7 @@ MODULE_LICENSE("GPL");
 //realizar cada vez que se reinicie el sistema puesto que la direccion cambia
 #define dir_systable 0xffffffff92400200 
 
-unsigned long *sys_call_table = (unsigned long*) dir_systable;
+unsigned long *sys_call_table;
 
 //puntero de la funcion del sys_openat
 asmlinkage long (*real_open)(const char* __user, int, int);
@@ -72,6 +72,7 @@ int make_ro(unsigned long address)
 
 static int __init init_my_module(void)
 {
+	*(long *)&sys_call_table = = 0xffffffff92400200;
 	//para este ejemplo se utiliza la llamada al sistema openat para abir archivos
 	printk(KERN_INFO "Inside kernel space\n");
 	//cambiando permisos de la pagina
