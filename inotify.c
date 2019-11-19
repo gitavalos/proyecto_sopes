@@ -9,6 +9,7 @@
 
 #define EVENT_SIZE  (sizeof(struct inotify_event))
 #define BUF_LEN     (1024 * (EVENT_SIZE + 16))
+#define MAX_LEN 1024 /*Path length for a directory*/
 
 void add_watches(int fd, char *root)
 {
@@ -28,7 +29,7 @@ exit(0);
 wd = inotify_add_watch(fd, root, IN_CREATE | IN_MODIFY | IN_DELETE); 
 if (wd == -1)
 {
-fprintf(fp_log,"Couldn't add watch to %s\n",root);
+printf("Couldn't add watch to %s\n",root);
 }
 else
 {
@@ -105,7 +106,7 @@ int main(int argc, char **argv) {
 		
 	}
 	
-    (void) inotify_rm_watch(fd, wd);
+    //(void) inotify_rm_watch(fd, wd);
     (void) close(fd);
 	printf ("Exiting inotify example...\n");
 	return 1;
