@@ -58,7 +58,7 @@ void add_watches(int fd, char *root)
 int main(int argc, char **argv) {   
     int length, i = 0;
     int fd;
-    int wd;
+    //int wd;
     char buffer[BUF_LEN];
 	FILE* fptr;
     fd = inotify_init();
