@@ -1,5 +1,8 @@
-#include <linux/version.h>
 #include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/init.h>
+#include <linux/syscalls.h>
+#include <linux/version.h>
 #include <linux/miscdevice.h>
 #include <linux/fs.h>
 #include <linux/highmem.h>
