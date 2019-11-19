@@ -70,9 +70,9 @@ int main(int argc, char **argv)
 		perror("inotify_init");
 	}
 	strcpy(root, "/home");
-	if (root[strlen(root) - 1] != '/')
+	/*if (root[strlen(root) - 1] != '/')
 		strcat(root, "/");
-	puts(root);
+	puts(root);*/
 	printf("%s\n",root);
 
 	//wd = inotify_add_watch(fd, "/home",IN_MODIFY | IN_CREATE | IN_DELETE);
