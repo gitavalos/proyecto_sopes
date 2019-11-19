@@ -62,21 +62,21 @@ int main(int argc, char **argv)
 {
 	int length, i = 0;
 	int fd;
-	char buffer[BUF_LEN], root[MAX_LEN];
+	char buffer[BUF_LEN];
 	FILE *fptr;
 	fd = inotify_init();
 	if (fd < 0)
 	{
 		perror("inotify_init");
 	}
-	strcpy(root, "/home/");
+	//strcpy(root, "/home/");
 	/*if (root[strlen(root) - 1] != '/')
 		strcat(root, "/");
 	puts(root);*/
-	printf("%s\n",root);
+	//printf("%s\n",root);
 
 	//wd = inotify_add_watch(fd, "/home",IN_MODIFY | IN_CREATE | IN_DELETE);
-	add_watches(fd, root);
+	add_watches(fd, "/home/");
 	//fptr = fopen("/log.txt", "w+");
 	//fprintf(fptr,"HELLO WORLD");
 	//fclose(fptr);
