@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
 		}
 
 		if (i < length) {
-			fptr = fopen("/log.txt", "w+");
+			fptr = fopen("/log.txt", "a");
 			struct inotify_event *event = (struct inotify_event *) &buffer[i];
 			if (event->len) {
 				if (event->mask & IN_CREATE) {
