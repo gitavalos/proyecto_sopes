@@ -33,7 +33,7 @@ void add_watches(int fd, char *root)
 	}
 	else
 	{
-		printf("Watching:: %s\n", root);
+		printf("Observando:: %s\n", root);
 	}
 
 	/* Add watches to the Level 1 sub-dirs*/
@@ -50,7 +50,7 @@ void add_watches(int fd, char *root)
 			if (wd == -1)
 				printf("Couldn't add watch to the directory %s\n", abs_dir);
 			else
-				printf("Watching:: %s\n", abs_dir);
+				printf("Observando:: %s\n", abs_dir);
 		}
 	}
 
@@ -88,24 +88,24 @@ int main(int argc, char **argv)
 
 		while (i < length)
 		{
-			fptr = fopen("/log.txt", "a");
+			fptr = fopen("/log_inotify.txt", "a");
 			struct inotify_event *event = (struct inotify_event *)&buffer[i];
 			if (event->len)
 			{
 				if (event->mask & IN_CREATE)
 				{
-					printf("The file %s was created.\n", event->name);
-					fprintf(fptr, "The file %s was created.\n", event->name);
+					printf("El archivo %s fue creado.\n", event->name);
+					fprintf(fptr, "El archivo %s fue creado.\n", event->name);
 				}
 				else if (event->mask & IN_DELETE)
 				{
-					printf("The file %s was deleted.\n", event->name);
-					fprintf(fptr, "The file %s was deleted.\n", event->name);
+					printf("El archivo %s fue eliminado.\n", event->name);
+					fprintf(fptr, "El archivo %s fue eliminado.\n", event->name);
 				}
 				else if (event->mask & IN_MODIFY)
 				{
-					printf("The file %s was modified.\n", event->name);
-					fprintf(fptr, "The file %s was modified.\n", event->name);
+					printf("El archivo %s fue modificado.\n", event->name);
+					fprintf(fptr, "El archivo %s fue modificado.\n", event->name);
 				}
 			}
 			i += EVENT_SIZE + event->len;
