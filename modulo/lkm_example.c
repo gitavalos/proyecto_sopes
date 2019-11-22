@@ -9,7 +9,6 @@
 #include<linux/unistd.h>
 //#include <asm/unistd.h>
 //#include <sys/syscall.h>
-#include <linux/kallsyms.h>
 
 MODULE_LICENSE("GPL");
 /*
