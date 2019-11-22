@@ -31,7 +31,10 @@ asmlinkage long (*original_sys_unlink) (const char *pathname);
 /*return -1. this will prevent any process from unlinking any file*/
 asmlinkage long hacked_sys_unlink(const char *pathname)
 {
-    printk("RETENIDO: unlink( %s )\n", pathname);
+	char * name;
+	strncpy_from_user(name,pathname,200);
+
+    printk("RETENIDO: unlink( %s )\n", name);
     //return original_sys_unlink(pathname);
 	return -1;
 }
