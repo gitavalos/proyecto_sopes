@@ -78,7 +78,7 @@ static int __init init_my_module(void)
 	printk(KERN_INFO "Inside kernel space\n");
 	//cambiando permisos de la pagina
 	make_rw((unsigned long)sys_call_table);	
-	original_sys_unlink = (void *)xchg(&sys_call_table[__NR_unlink],hacked_sys_unlink);
+	original_sys_unlink = (void *)xchg(&sys_call_table[__NR_unlinkat],hacked_sys_unlink);
 	make_ro((unsigned long)sys_call_table);
 	printk("hizo el cambio de pagina \n");
 	return 0;
@@ -90,7 +90,7 @@ static void __exit cleanup_my_module(void)
 	//cambiando la direccion de memoria a modo de escritura
 	make_rw((unsigned long)sys_call_table);
 	
-	xchg(&sys_call_table[__NR_unlink],original_sys_unlink);
+	xchg(&sys_call_table[__NR_unlinkat],original_sys_unlink);
 	
 	make_ro((unsigned long)sys_call_table);
 	printk(KERN_INFO "Exiting kernel space\n");
