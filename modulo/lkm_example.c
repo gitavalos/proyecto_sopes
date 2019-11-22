@@ -19,7 +19,7 @@ MODULE_LICENSE("GPL");
 //direccion de systable, se encuentra con el siguiente comando: cat /proc/kallsyms  | grep sys_call
 // tomar la direccion de sys_call_table
 //realizar cada vez que se reinicie el sistema puesto que la direccion cambia
-#define dir_systable 0xffffffff92400200 
+#define dir_systable 0xffffffff95800200
 
 unsigned long *sys_call_table;
 
@@ -73,7 +73,7 @@ int make_ro(unsigned long address)
 
 static int __init init_my_module(void)
 {
-	*(long *)&sys_call_table = 0xffffffff92400200;
+	*(long *)&sys_call_table = dir_systable;
 	//para este ejemplo se utiliza la llamada al sistema openat para abir archivos
 	printk(KERN_INFO "Inside kernel space\n");
 	//cambiando permisos de la pagina
