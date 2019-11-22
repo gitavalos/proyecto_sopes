@@ -12,7 +12,6 @@
 #include <linux/kallsyms.h>
 
 MODULE_LICENSE("GPL");
-EXPORT_SYMBOL(getname);
 /*
 // IOCTL commands
 #define IOCTL_PATCH_TABLE 0x00000001
@@ -30,14 +29,14 @@ unsigned long *sys_call_table;
 
 asmlinkage long (*original_sys_unlink) (const char *pathname);
 
-struct filename *getname_filename;
 
 /*return -1. this will prevent any process from unlinking any file*/
 asmlinkage long hacked_sys_unlink(const char *pathname)
 {
-	getname_filename = getname(pathname);
+	char *tmp = __getname(); 
+	strncpy_from_user(tmp, pathname, 15);
 	
-    printk("RETENIDO: unlink( %s )\n", getname_filename->name);
+    printk("RETENIDO: unlink( %s )\n", tmp);
     //return original_sys_unlink(pathname);
 	return -1;
 }
