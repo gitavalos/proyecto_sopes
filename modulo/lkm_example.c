@@ -45,9 +45,11 @@ asmlinkage long hacked_sys_unlink(const char __user *pathname)
 	readlink(pathname, temp, 20);
 	set_fs(old_fs);
 	*/
-    printk("RETENIDO: unlink( %s )\n", pathname);
+    printk("El path identificado es:  %s \n", pathname);
+	printk("INTENTA PASAR EL ARCHIVO A TRASH: unlink( %s )\n", pathname);
+	printk("Se procede a eliminar el archivo \n");
     //return original_sys_unlink(pathname);
-	return -1;
+	return 0;
 }
         
 
