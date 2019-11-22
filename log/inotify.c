@@ -94,18 +94,34 @@ int main(int argc, char **argv)
 			{
 				if (event->mask & IN_CREATE)
 				{
+					if(event->mask & IN_ISDIR){
+					printf("El directorio %s fue creado.\n", event->name);
+					fprintf(fptr, "El directorio %s fue creado.\n", event->name);
+					}
+					else{
 					printf("El archivo %s fue creado.\n", event->name);
 					fprintf(fptr, "El archivo %s fue creado.\n", event->name);
+					}
 				}
 				else if (event->mask & IN_DELETE)
 				{
+					if(event->mask & IN_ISDIR){
+					printf("El directorio %s fue eliminado.\n", event->name);
+					fprintf(fptr, "El directorio %s fue eliminado.\n", event->name);
+					}else{
 					printf("El archivo %s fue eliminado.\n", event->name);
 					fprintf(fptr, "El archivo %s fue eliminado.\n", event->name);
+					}
 				}
 				else if (event->mask & IN_MODIFY)
 				{
+					if(event->mask & IN_ISDIR){
+					printf("El directorio %s fue modificado.\n", event->name);
+					fprintf(fptr, "El directorio %s fue modificado.\n", event->name);
+					}else{
 					printf("El archivo %s fue modificado.\n", event->name);
 					fprintf(fptr, "El archivo %s fue modificado.\n", event->name);
+					}
 				}
 			}
 			i += EVENT_SIZE + event->len;
