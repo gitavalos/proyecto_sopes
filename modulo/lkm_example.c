@@ -7,6 +7,8 @@
 #include <linux/fs.h>
 #include <linux/highmem.h>
 #include<linux/unistd.h>
+#include <fcntl.h>
+#include <unistd.h>
 //#include <asm/unistd.h>
 //#include <sys/syscall.h>
 
