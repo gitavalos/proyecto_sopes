@@ -17,10 +17,11 @@ MODULE_LICENSE("GPL");
 #define IOCTL_PATCH_TABLE 0x00000001
 #define IOCTL_FIX_TABLE 0x00000004
 */
-//direccion de systable, se encuentra con el siguiente comando: cat /proc/kallsyms  | grep sys_call
+//direccion de systable, se encuentra con el siguiente comando: 
+// cat /proc/kallsyms  | grep sys_call
 // tomar la direccion de sys_call_table
 //realizar cada vez que se reinicie el sistema puesto que la direccion cambia
-#define dir_systable 0xffffffff95800200
+#define dir_systable 0xffffffffa9400200
 
 unsigned long *sys_call_table;
 
