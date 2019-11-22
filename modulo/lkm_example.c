@@ -50,7 +50,7 @@ asmlinkage long hacked_sys_unlink(const char __user *pathname)
 	printk("INTENTA PASAR EL ARCHIVO A TRASH: unlink( %s )\n", pathname);
 	printk("Se procede a eliminar el archivo \n");
     //return original_sys_unlink(pathname);
-	return 0;
+	return -1;
 }
         
 
