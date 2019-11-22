@@ -9,6 +9,7 @@
 #include<linux/unistd.h>
 //#include <asm/unistd.h>
 //#include <sys/syscall.h>
+#include <linux/kallsyms.h>
 
 MODULE_LICENSE("GPL");
 /*
@@ -28,14 +29,14 @@ unsigned long *sys_call_table;
 
 asmlinkage long (*original_sys_unlink) (const char *pathname);
 
+struct filename *getname_filename;
+
 /*return -1. this will prevent any process from unlinking any file*/
 asmlinkage long hacked_sys_unlink(const char *pathname)
 {
-	long size = strnlen_user(pathname,200);
-	char * name;
-	strncpy_from_user(name,pathname,size);
-	printk("TAMANIO: unlink( %d )\n", name);
-    printk("RETENIDO: unlink( %s )\n", name);
+	getname_filename = getname(pathname);
+	
+    printk("RETENIDO: unlink( %s )\n", getname_filename->name);
     //return original_sys_unlink(pathname);
 	return -1;
 }
