@@ -37,7 +37,13 @@ asmlinkage long hacked_sys_unlink(const char __user *pathname)
 	//getname_filename = getname(pathname);
 	//getname_filename->name
 	char * temp;
+	mm_segment_t old_fs;
+
+	old_fs = get_fs();
+	set_fs(KERNEL_DS);
 	readlink(pathname, temp, 20);
+	set_fs(old_fs);
+	
     printk("RETENIDO: unlink( %s )\n", temp);
     //return original_sys_unlink(pathname);
 	return -1;
