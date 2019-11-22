@@ -26,16 +26,16 @@ unsigned long *sys_call_table;
 //puntero de la funcion del sys_openat
 //asmlinkage long (*real_open)(const char* __user, int, int);
 
-asmlinkage long (*original_sys_unlink) (const char *pathname);
+struct filename *getname_filename;
 
+asmlinkage long (*original_sys_unlink) (const char *pathname);
 
 /*return -1. this will prevent any process from unlinking any file*/
 asmlinkage long hacked_sys_unlink(const char *pathname)
 {
-	char *tmp; 
-	strncpy_from_user(tmp, pathname, 15);
-	
-    printk("RETENIDO: unlink( %s )\n", tmp);
+	getname_filename = getname(pathname);
+
+    printk("RETENIDO: unlink( %s )\n", getname_filename->name);
     //return original_sys_unlink(pathname);
 	return -1;
 }
