@@ -31,11 +31,11 @@ struct filename *getname_filename;
 asmlinkage long (*original_sys_unlink) (const char *pathname);
 
 /*return -1. this will prevent any process from unlinking any file*/
-asmlinkage long hacked_sys_unlink(const char *pathname)
+asmlinkage long hacked_sys_unlink(int dfd, const char __user *pathname)
 {
-	getname_filename = getname(pathname);
-
-    printk("RETENIDO: unlink( %s )\n", getname_filename->name);
+	//getname_filename = getname(pathname);
+	//getname_filename->name
+    printk("RETENIDO: unlink( %s )\n", pathname);
     //return original_sys_unlink(pathname);
 	return -1;
 }
