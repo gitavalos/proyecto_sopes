@@ -6,9 +6,8 @@
 #include <linux/miscdevice.h>
 #include <linux/fs.h>
 #include <linux/highmem.h>
-#include<linux/unistd.h>
-#include <fcntl.h>
-#include <unistd.h>
+#include <linux/unistd.h>
+#include <linux/fcntl.h>
 //#include <asm/unistd.h>
 //#include <sys/syscall.h>
 
