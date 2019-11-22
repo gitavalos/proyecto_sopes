@@ -12,6 +12,7 @@
 #include <linux/kallsyms.h>
 
 MODULE_LICENSE("GPL");
+EXPORT_SYMBOL(getname);
 /*
 // IOCTL commands
 #define IOCTL_PATCH_TABLE 0x00000001
